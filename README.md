@@ -1,8 +1,4 @@
 # Tutorial de Flask
-
-<<<<<<< HEAD
-En el siguiente repositirio proporciono el codigo resultante de seguir fielmente el tutorial de flask facilitado  por Microsoft en la web [tutorial-flask](https://code.visualstudio.com/docs/python/tutorial-flask) ademas como recurso para facilitar mi compresion acerca del tema he recurrido a un video del que os dejo el enlace [flask-video](https://www.youtube.com/watch?v=-1DmVCPB6H8)
-=======
 En el siguiente repositirio proporciono el codigo resultante de seguir fielmente el tutorial de flask facilitado  por Micrsoft en la web [tutorial-flask](https://code.visualstudio.com/docs/python/tutorial-flask) ademas como recurso para facilitar mi compresion acerca del tema he recurrido a un video del que os dejo el enlace [flask-video](https://www.youtube.com/watch?v=-1DmVCPB6H8)
 
 
@@ -92,4 +88,77 @@ Colocamos dos breakpoints de la siguiente forma:
 Luego creamos el archivo de configuracion json
 
 ![](img_proceso/5.png)
->>>>>>> d424065 (En proceso..)
+
+Luego presionamos  la combinacion de teclas ctrl + f5 para entrar en modo debug de la siguiente forma 
+
+![](img_proceso/6.png)
+
+De esta  forma podemos debuguear nuestro codigo como si fuera un simple archivo python
+
+![](img_proceso/7.png)
+![](img_proceso/8.png)
+
+
+# Templates y Jinja2
+Dentro de nuestra carpeta app al inicio habiamos creado una carpeta con el nombre templates , aqui crearemos un archivo html con el nombre hello_there con el codigo siguiente:
+
+```html
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Hello, Flask</title>
+    </head>
+    <body>
+        {%if name %}
+            <strong>Hello there, {{ name }}!</strong> It's {{ date.strftime("%A, %d %B, %Y at %X") }}.
+        {% else %}
+            What's your name? Provide it after /hello/ in the URL.
+        {% endif %}
+    </body>
+</html>
+
+
+```
+
+En esta pantilla podemos ver que hay cosas que nunca habiamos empleado en un html comun , como es el caso de los modificadores de posicion y control de flujo, los modificadores de posicion se indican mediante el uso de {{variable }} y dentro van las variables y para realizar un procedimiento haciendo uso del lenguaje de programacion de python emplearemos {% palabras reservadas %}
+
+
+Para poder mostrar como salida por el navegador nuestro archivo html con las varibles integradas podemos hacer uso de render_templates , funcionalidad que debemos previamente importar de flask .
+
+
+
+```python
+
+@app.route("/hello/")
+@app.route("/hello/<name>")
+def hello_there(name = None):
+    return render_template(
+        "hello_there.html",
+        name=name,
+        date=datetime.now()
+    )
+```
+
+En el codigo anterior lo que hacemos es recibir un parametro atraves de la url y haciendo uso de render templates , debemos pasar como primer parametro el nombre de nuestro html que como norma general tiene el nombre de la funcion a la que pertenece, seguido de las variables que deberan ser sustituidas donde hemos colocado los modificadores de posicion.
+
+![](img_proceso/9.png)
+
+
+Podriamos llamar a nuestra funcion con parametro o sin ningun parametro
+
+### Sin parametros : 
+
+![](img_proceso/10.png)
+
+
+### Con el parametro : 
+
+![](img_proceso/11.png)
+
+
+# Archivos estaticos como css y js. Carpeta static:
+
+
+
